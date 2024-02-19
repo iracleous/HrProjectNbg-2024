@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using HrProjectNbg_2024.Data;
 using HrProjectNbg_2024.Models;
+using HrProjectNbg_2024.Dtos;
 
 namespace HrProjectNbg_2024.Controllers
 {
@@ -22,7 +23,9 @@ namespace HrProjectNbg_2024.Controllers
         // GET: Employees
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Employees.Include(employee => employee.Manager). ToListAsync());
+            return View(await _context.Employees.Include(employee => employee.Manager). 
+                Include(employee => employee.Department).
+                ToListAsync());
         }
 
         // GET: Employees/Details/5
@@ -153,5 +156,31 @@ namespace HrProjectNbg_2024.Controllers
         {
             return _context.Employees.Any(e => e.Id == id);
         }
+
+
+        public async Task<IActionResult> AssignEmployeeToDepartment()
+        {
+            DepartmentEmployeeDto dto = new DepartmentEmployeeDto()
+            {
+                Departments = await _context.Departments.ToListAsync(),
+                Employees = await _context.Employees.ToListAsync()
+            };
+            return View(dto);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AssignEmployeeToDepartment(DepartmentEmployeeDto dto)
+        {
+            var employee = await _context.Employees.FindAsync(dto.EmployeeId);
+            var department =await _context.Departments.FindAsync(dto.DepartmentId);
+            if (employee == null || department == null)
+                return NotFound();
+            employee.Department = department;
+            await _context.SaveChangesAsync();
+            return RedirectToAction("Index");
+        }
+
+
+
     }
 }

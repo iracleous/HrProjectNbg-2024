@@ -1,0 +1,39 @@
+﻿@using HrProjectNbg_2024.Dtos
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model DepartmentEmployeeDto
+
+
+<form asp-controller="Employees" asp-action="AssignEmployeeToDepartment">
+    <div class="form-group">
+        <label  class="control-label">
+            Select the employee
+        </label>
+        <select asp-for="EmployeeId">
+            @foreach(var employee in Model.Employees)
+                {
+                    <option value="@employee.Id">@employee.Name</option>
+                }
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label">
+            Select the department
+        </label>
+        <select asp-for="DepartmentId">
+                @foreach (var department in Model.Departments)
+                {
+                    <option value="@department.Id">@department.Name</option>
+                }
+        </select>
+    </div>
+
+    <div class="form-group">
+        <input type="submit" value="Assign department" class="btn btn-primary" />
+    </div>
+
+</form>
