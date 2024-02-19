@@ -1,7 +1,11 @@
 ﻿Hr department
 ------------------------------------------------------
+Business Analysis
+A Hotel company has a Human Resources department (HR).
 Employees are managed. Employee belongs to a department. Employee has a manager.
-Web Api and Web App.
+Develop a Web Api and a Web App.
+
+
 
 The Web app is available at
 https://localhost:7247/ 
@@ -22,11 +26,13 @@ Solution
 5. Define connection string, add in program.cs 
 6. migration
 
-7. Manage the employees -> scaffold a controller,  add to the main menu
+7. Manage the employees -> scaffold a MVC controller,  add to the main menu
 
 8. make sure that the manager is shown
 
-9. create Web API for employee
+9. scaffold Web API controller for employee
+
+
 10. add API request to add a manager to an employee
 11. add API request to add employee to a department
  
