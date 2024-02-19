@@ -115,9 +115,22 @@ namespace HrProjectNbg_2024.ApiControllers
             return CreatedAtAction("GetEmployee", new { id = employee.Id }, employee);
          }
 
+        // POST: api/ApiEmployees
+        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [HttpPost]
+        [Route("{employeeId}/department/{departmentId}")]
+        public async Task<ActionResult<Employee>> PostDepartmentToEmployee(int employeeId, int departmentId)
+        {
+            var employee = _context.Employees.Find(employeeId);
+            var department = _context.Departments.Find(departmentId);
+            if (employee == null || department == null) 
+                return NotFound();
+            employee.Department = department;
+            await _context.SaveChangesAsync();
+            return CreatedAtAction("GetEmployee", new { id = employee.Id }, employee);
+        }
 
-
-        private bool EmployeeExists(int id)
+            private bool EmployeeExists(int id)
         {
             return _context.Employees.Any(e => e.Id == id);
         }
