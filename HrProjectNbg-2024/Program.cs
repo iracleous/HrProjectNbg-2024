@@ -8,7 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 
 
-var optionsCon = builder.Configuration.GetConnectionString("ConnectionStrings:Con1");
+var optionsCon = builder.Configuration.GetConnectionString("ConnectionStrings:Con2");
 builder.Services.AddDbContext<HrDbContext>(options => options.UseSqlServer(optionsCon));
 
 var app = builder.Build();
