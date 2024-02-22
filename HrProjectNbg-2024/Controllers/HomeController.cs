@@ -30,7 +30,9 @@ namespace HrProjectNbg_2024.Controllers
 
         public IActionResult Api()
         {
-           string url = "https://localhost:7247/api/apiemployees";
+            _logger.LogTrace("Trace: Api was called");
+            _logger.LogInformation("Information: Api was called");
+            string url = "https://localhost:7247/api/apiemployees";
            var employees = _apiService.GetEmployees(url);
            return View(employees);
          }

@@ -20,6 +20,9 @@
                 @Html.DisplayNameFor(model => model.HiringDate)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.EmployeeCategory)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.Manager)
             </th>
             <th>
@@ -37,6 +40,9 @@
             <td>
                 @Html.DisplayFor(modelItem => item.HiringDate)
             </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EmployeeCategory)
+                </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Manager.Name)
                 </td>

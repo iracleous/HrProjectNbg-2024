@@ -26,7 +26,7 @@ Solution
 5. Define connection string, add in program.cs 
 6. migration
 
-7. Manage the employees -> scaffold a MVC controller,  add to the main menu
+7. Manage the employees -> scaffold a MVC controller with views ,  add to the main menu
 
 8. make sure that the manager is shown
 
@@ -36,6 +36,9 @@ Solution
 10. add API request to add a manager to an employee
 11. add API request to add employee to a department
  
+ 12. change views to dislay the department, manager
+
+	 
 12. Create an MVC request to assign department to employee
 	1. create the view
 	1. create the command

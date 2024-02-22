@@ -7,6 +7,7 @@ public class HrDbContext:DbContext
 {
     public DbSet<Department> Departments { get; set; }
     public DbSet<Employee> Employees { get; set; }
+    public DbSet<Models.Action> Actions { get; set; }
 
     public HrDbContext()
     {
