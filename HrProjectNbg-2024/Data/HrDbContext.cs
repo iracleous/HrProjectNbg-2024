@@ -17,7 +17,7 @@ public class HrDbContext:DbContext
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         var MyConfig = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
-        var connectionString = MyConfig.GetValue<string>("ConnectionStrings:Con2");
+        var connectionString = MyConfig.GetValue<string>("ConnectionStrings:Con1");
         optionsBuilder.UseSqlServer(connectionString);
     }
 

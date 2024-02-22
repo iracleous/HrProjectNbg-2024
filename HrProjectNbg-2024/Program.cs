@@ -1,4 +1,5 @@
 using HrProjectNbg_2024.Data;
+using HrProjectNbg_2024.Services;
 using Microsoft.EntityFrameworkCore;
 using System.Transactions;
 
@@ -8,8 +9,10 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 
 
-var optionsCon = builder.Configuration.GetConnectionString("ConnectionStrings:Con2");
+var optionsCon = builder.Configuration.GetConnectionString("ConnectionStrings:Con1");
 builder.Services.AddDbContext<HrDbContext>(options => options.UseSqlServer(optionsCon));
+
+builder.Services.AddScoped<IApiService, ApiService>();
 
 var app = builder.Build();
 
