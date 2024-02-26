@@ -11,7 +11,6 @@ namespace HrProjectNbg_2024.Controllers
         private readonly ILogger<HomeController> _logger;
         private readonly IApiService _apiService;
  
-
         public HomeController(ILogger<HomeController> logger, IApiService apiService)
         {
             _logger = logger;
@@ -28,15 +27,13 @@ namespace HrProjectNbg_2024.Controllers
             return View();
         }
 
-        public IActionResult Api()
+        public async Task<IActionResult> Api()
         {
             _logger.LogTrace("Trace: Api was called");
             _logger.LogInformation("Information: Api was called");
             string url = "https://localhost:7247/api/apiemployees";
-           var employees = _apiService.GetEmployees(url);
-           return View(employees);
+            return View(await _apiService.GetEmployeesAsync(url));
          }
-
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

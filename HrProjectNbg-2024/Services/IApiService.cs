@@ -4,5 +4,5 @@ namespace HrProjectNbg_2024.Services;
 
 public interface IApiService
 {
-    IEnumerable<Employee>? GetEmployees(string url);
+    Task<IEnumerable<Employee>> GetEmployeesAsync(string url);
 }
