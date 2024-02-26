@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using HrProjectNbg_2024.Data;
-using HrProjectNbg_2024.Models;
+﻿using HrProjectNbg_2024.Data;
 using HrProjectNbg_2024.Dtos;
+using HrProjectNbg_2024.Models;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Data;
-using System.Net;
 
 namespace HrProjectNbg_2024.Controllers
 {
@@ -111,7 +105,7 @@ namespace HrProjectNbg_2024.Controllers
                         DateTime = DateTime.Now,
                         ActionDescription = "update the employee " + employee.Id,
                     });
-                        
+
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
@@ -140,24 +134,24 @@ namespace HrProjectNbg_2024.Controllers
         {
             if (id == null)
             {
-                return NotFound(); 
+                return NotFound();
             }
             var employeeToUpdate = _context.Employees.Find(id);
-            
-                try
-                {
-                    employeeToUpdate.Name = employee.Name;
-                    employeeToUpdate.HiringDate = employee.HiringDate;
-                    employeeToUpdate.EmployeeCategory = employee.EmployeeCategory;
-                    _context.SaveChanges();
-                    return RedirectToAction("Index");
-                }
-                catch (DataException /* dex */)
-                {
-                    //Log the error (uncomment dex variable name and add a line here to write a log.
-                    ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists, see your system administrator.");
-                }
-             
+
+            try
+            {
+                employeeToUpdate.Name = employee.Name;
+                employeeToUpdate.HiringDate = employee.HiringDate;
+                employeeToUpdate.EmployeeCategory = employee.EmployeeCategory;
+                _context.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            catch (DataException /* dex */)
+            {
+                //Log the error (uncomment dex variable name and add a line here to write a log.
+                ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists, see your system administrator.");
+            }
+
             return View(employeeToUpdate);
         }
 
@@ -226,7 +220,7 @@ namespace HrProjectNbg_2024.Controllers
         public async Task<IActionResult> AssignEmployeeToDepartment(DepartmentEmployeeViewModels dto)
         {
             var employee = await _context.Employees.FindAsync(dto.EmployeeId);
-            var department =await _context.Departments.FindAsync(dto.DepartmentId);
+            var department = await _context.Departments.FindAsync(dto.DepartmentId);
             if (employee == null || department == null)
                 return NotFound();
             employee.Department = department;

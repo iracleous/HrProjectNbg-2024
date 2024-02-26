@@ -15,16 +15,26 @@ namespace HrProjectNbg_2024.ApiControllers
     public class ApiEmployeesController : ControllerBase
     {
         private readonly HrDbContext _context;
+        private readonly ILogger<ApiEmployeesController> _logger;
+        private readonly IConfiguration _configuration;
 
-        public ApiEmployeesController(HrDbContext context)
+        public ApiEmployeesController(HrDbContext context, ILogger<ApiEmployeesController> logger,
+            IConfiguration configuration)
         {
             _context = context;
+            _logger = logger;
+            _configuration = configuration;
         }
 
         // GET: api/ApiEmployees
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Employee>>> GetEmployees()
         {
+            _logger.LogInformation("The API has been  called");
+            foreach ( var conf in _configuration.AsEnumerable() )
+            {
+                _logger.LogInformation($"{conf.Key}= {conf.Value}");
+            }
             return await _context.Employees.ToListAsync();
         }
 
