@@ -8,6 +8,8 @@ using Microsoft.EntityFrameworkCore;
 using HrProjectNbg_2024.Data;
 using HrProjectNbg_2024.Models;
 using HrProjectNbg_2024.Dtos;
+using System.Data;
+using System.Net;
 
 namespace HrProjectNbg_2024.Controllers
 {
@@ -90,7 +92,7 @@ namespace HrProjectNbg_2024.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,HiringDate,EmployeeCategory")] Employee employee)
+        public async Task<IActionResult> Edit2(int id, [Bind("Id,Name,HiringDate,EmployeeCategory")] Employee employee)
         {
             if (id != employee.Id)
             {
@@ -127,6 +129,49 @@ namespace HrProjectNbg_2024.Controllers
             }
             return View(employee);
         }
+
+
+
+
+
+        [HttpPost, ActionName("Edit")]
+        [ValidateAntiForgeryToken]
+        public IActionResult EditPost(int? id, [Bind("Id,Name,HiringDate,EmployeeCategory")] Employee employee)
+        {
+            if (id == null)
+            {
+                return NotFound(); 
+            }
+            var employeeToUpdate = _context.Employees.Find(id);
+            
+                try
+                {
+                    employeeToUpdate.Name = employee.Name;
+                    employeeToUpdate.HiringDate = employee.HiringDate;
+                    employeeToUpdate.EmployeeCategory = employee.EmployeeCategory;
+                    _context.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                catch (DataException /* dex */)
+                {
+                    //Log the error (uncomment dex variable name and add a line here to write a log.
+                    ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists, see your system administrator.");
+                }
+             
+            return View(employeeToUpdate);
+        }
+
+
+
+
+
+
+
+
+
+
+
+
 
         // GET: Employees/Delete/5
         public async Task<IActionResult> Delete(int? id)
@@ -169,7 +214,7 @@ namespace HrProjectNbg_2024.Controllers
 
         public async Task<IActionResult> AssignEmployeeToDepartment()
         {
-            DepartmentEmployeeDto dto = new DepartmentEmployeeDto()
+            DepartmentEmployeeViewModels dto = new DepartmentEmployeeViewModels()
             {
                 Departments = await _context.Departments.ToListAsync(),
                 Employees = await _context.Employees.ToListAsync()
@@ -178,7 +223,7 @@ namespace HrProjectNbg_2024.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AssignEmployeeToDepartment(DepartmentEmployeeDto dto)
+        public async Task<IActionResult> AssignEmployeeToDepartment(DepartmentEmployeeViewModels dto)
         {
             var employee = await _context.Employees.FindAsync(dto.EmployeeId);
             var department =await _context.Departments.FindAsync(dto.DepartmentId);

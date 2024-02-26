@@ -4,7 +4,7 @@
 *@
 @{
 }
-@model DepartmentEmployeeDto
+@model DepartmentEmployeeViewModels
 
 
 <form asp-controller="Employees" asp-action="AssignEmployeeToDepartment">
@@ -12,7 +12,8 @@
         <label  class="control-label">
             Select the employee
         </label>
-        <select asp-for="EmployeeId">
+        <select asp-for="EmployeeId" required>
+              <option disabled selected value="" > -- select an option -- </option>
             @foreach(var employee in Model.Employees)
                 {
                     <option value="@employee.Id">@employee.Name</option>
@@ -24,7 +25,8 @@
         <label class="control-label">
             Select the department
         </label>
-        <select asp-for="DepartmentId">
+        <select asp-for="DepartmentId" required>
+            <option disabled selected value="" > -- select an option -- </option>
                 @foreach (var department in Model.Departments)
                 {
                     <option value="@department.Id">@department.Name</option>
